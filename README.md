@@ -72,10 +72,7 @@ Sur la dernière page, `Affichage des résultats`, visualisez l'enchaînement op
 
 Mélodistrib a été développé en utilisant les technologies suivantes :
 
-- Vue.js ![Vue.js](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/vue?style=flat-square)
-- Tailwind CSS ![Tailwind CSS](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/tailwindcss?style=flat-square&logo=tailwind-css)
-- Vite ![Vite](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/vite?style=flat-square&logo=vite)
-- Electron ![Electron](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/electron?style=flat-square&logo=electron)
+![Vue.js](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/dev/vue?style=flat-square&logo=vue)  ![Tailwind CSS](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/dev/tailwindcss?style=flat-square&logo=tailwind-css)  ![Vite](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/dev/vite?style=flat-square&logo=vite) ![Electron](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/dev/electron?style=flat-square&logo=electron)
 
 ## Recommandations de développement
 
