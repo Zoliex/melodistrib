@@ -46,19 +46,19 @@ Pour installer Mélodistrib, suivez ces étapes simples :
 
 ### 1. Choix des morceaux
 
-Sur la première page, `Choix des morceaux`, saisissez la liste des morceaux qui seront joués. Pour chaque morceau, spécifiez son nom et le nombre de musiciens requis. Utilisez les boutons `Exporter` et `Importer` pour sauvegarder ou charger la liste depuis des fichiers .melt.
+Sur la première page, `Choix des morceaux`, saisissez la liste des morceaux qui seront joués. Pour chaque morceau, spécifiez son nom et le nombre de musiciens requis. Utilisez les boutons `Exporter` et `Importer` pour sauvegarder ou charger la liste depuis dans un fichier au format .melt.
 
 ![Choix des morceaux](images/choix_morceaux.png)
 
 ### 2. Choix des musiciens
 
-Sur la deuxième page, `Choix des musiciens`, entrez les noms et prénoms des musiciens qui joueront les morceaux. Comme précédemment, utilisez les boutons `Exporter` et `Importer` pour gérer la liste des musiciens au format .melm.
+Sur la deuxième page, `Choix des musiciens`, entrez les noms et prénoms des musiciens qui joueront les morceaux. Comme précédemment, utilisez les boutons `Exporter` et `Importer` pour gérer la liste des musiciens dans un fichier au format .melm.
 
 ![Choix des musiciens](images/choix_musiciens.png)
 
 ### 3. Sélection des morceaux
 
-Sur la dernière page avant les résultats, `Sélection des morceaux`, attribuez à chaque musicien les morceaux qu'il souhaite jouer en priorité. Vous pouvez également exporter et importer toutes les données avec les boutons `Exporter tout` et `Importer tout` au format .mels.
+Sur la dernière page avant les résultats, `Sélection des morceaux`, attribuez à chaque musicien les morceaux qu'il souhaite jouer en priorité. Vous pouvez également exporter et importer toutes les données avec les boutons `Exporter tout` et `Importer tout` dans un fichier au format .mels.
 
 ![Sélection des morceaux](images/selection_morceaux.png)
 
@@ -134,7 +134,7 @@ Si vous rencontrez des problèmes ou avez des idées d'amélioration, veuillez l
 2. **Clone du fork :** Clonez votre fork sur votre machine locale.
 
     ```bash
-    git clone https://github.com/Zoliex/melodistrib.git
+    git clone https://github.com/<votre-pseudo>/melodistrib.git
     ```
 
 3. **Création d'une branche :** Créez une branche pour travailler sur votre contribution.
