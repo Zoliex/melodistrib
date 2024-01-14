@@ -121,7 +121,7 @@ $ npm run build:linux
 
 # Contribuer à Mélodistrib
 
-Nous accueillons les contributions de la communauté pour améliorer et étendre les fonctionnalités de Mélodistrib. Si vous souhaitez contribuer, suivez ces étapes :
+Si vous souhaitez contribuer, suivez ces étapes :
 
 ## Soumettre des problèmes
 
