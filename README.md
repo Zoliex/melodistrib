@@ -11,6 +11,7 @@
 ![GitHub](https://img.shields.io/github/issues-pr/Zoliex/melodistrib?style=flat-square)
 
 # Sommaire
+
 - [Sommaire](#sommaire)
   - [Installation](#installation)
   - [Utilisation](#utilisation)
@@ -72,7 +73,7 @@ Sur la dernière page, `Affichage des résultats`, visualisez l'enchaînement op
 
 Mélodistrib a été développé en utilisant les technologies suivantes :
 
-![Vue.js](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/dev/vue?style=flat-square&logo=vue)  ![Tailwind CSS](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/dev/tailwindcss?style=flat-square&logo=tailwind-css)  ![Vite](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/dev/vite?style=flat-square&logo=vite) ![Electron](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/dev/electron?style=flat-square&logo=electron)
+![Vue.js](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/dev/vue?style=flat-square&logo=vue) ![Tailwind CSS](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/dev/tailwindcss?style=flat-square&logo=tailwind-css) ![Vite](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/dev/vite?style=flat-square&logo=vite) ![Electron](https://img.shields.io/github/package-json/dependency-version/Zoliex/melodistrib/dev/electron?style=flat-square&logo=electron)
 
 ## Recommandations de développement
 
@@ -133,43 +134,44 @@ Si vous rencontrez des problèmes ou avez des idées d'amélioration, veuillez l
 
 2. **Clone du fork :** Clonez votre fork sur votre machine locale.
 
-    ```bash
-    git clone https://github.com/<votre-pseudo>/melodistrib.git
-    ```
+   ```bash
+   git clone https://github.com/<votre-pseudo>/melodistrib.git
+   ```
 
 3. **Création d'une branche :** Créez une branche pour travailler sur votre contribution.
 
-    ```bash
-    git checkout -b nom-de-ma-branche
-    ```
+   ```bash
+   git checkout -b nom-de-ma-branche
+   ```
 
 4. **Installation des dépendances :** Assurez-vous d'avoir les dépendances nécessaires installées.
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 5. **Effectuer des modifications :** Faites les modifications nécessaires et testez-les localement.
 
 6. **Validation des modifications :** Assurez-vous que votre code respecte les recommandations d'ESLint et de Prettier.
 
-    ```bash
-    npm run lint
-    npm run format
-    ```
+   ```bash
+   npm run lint
+   npm run format
+   ```
 
 7. **Soumettre les modifications :** Une fois vos modifications testées, effectuez un commit et poussez-les sur votre fork.
 
-    ```bash
-    git commit -m "Description des modifications"
-    git push origin nom-de-ma-branche
-    ```
+   ```bash
+   git commit -m "Description des modifications"
+   git push origin nom-de-ma-branche
+   ```
 
 8. **Création d'une pull request :** Sur la page GitHub de votre fork, créez une pull request en sélectionnant la branche que vous venez de pousser.
 
 Mélodistrib simplifie le processus de planification musicale en répartissant intelligemment les musiciens et en optimisant l'enchaînement des morceaux. Profitez de cette solution intuitive et gagnez du temps dans l'organisation de vos événements musicaux !
 
 # Licence
+
 Mélodistrib est sous licence GPLv3 - voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
 Logiciel créé et développé par [Zoliex](https://github.com/Zoliex)

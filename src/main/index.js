@@ -18,7 +18,8 @@ function createWindow() {
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
-    }
+    },
+    title: `Melodistrib - v${app.getVersion()}${is.dev ? ' - (Dev MODE)' : ''}`
   })
 
   const menu = Menu.buildFromTemplate([])

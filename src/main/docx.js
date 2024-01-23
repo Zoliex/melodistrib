@@ -32,7 +32,11 @@ const makeDoc = async (tracks, tracksInfo, musicians) => {
         new Paragraph({
           children: [
             new TextRun({
-              text: `Il y a ${track.similarityWithNext} musiciens en commun avec le morceau suivant.`,
+              text: `Il y a ${track.assignedMusicians.length} musiciens qui jouent ce morceau${
+                track.similarityWithNext != null
+                  ? `et ${track.similarityWithNext} musiciens en commun avec le morceau suivant.`
+                  : '.'
+              }`,
               italics: true
             }),
             new TextRun({ break: 1 })
@@ -52,7 +56,7 @@ const makeDoc = async (tracks, tracksInfo, musicians) => {
         children: [
           new TextRun({
             text: `Musiciens : ${track.assignedMusicians
-              .map((m) => `${m.chosen ? '*' : ''}${m.musician.firstname} ${m.musician.lastname}`)
+              .map((m) => `${m.musician.firstname} ${m.musician.lastname}`)
               .join(', ')}`
           }),
           new TextRun({ break: 1 })
@@ -91,10 +95,10 @@ const makeDoc = async (tracks, tracksInfo, musicians) => {
           }),
           new TableCell({
             children: [new Paragraph(String(trackInfo[1].initial))]
-          }),
-          new TableCell({
-            children: [new Paragraph(String(trackInfo[1].chosen))]
           })
+          /*new TableCell({
+            children: [new Paragraph(String(trackInfo[1].chosen))]
+          })*/
         ]
       })
     )
@@ -131,23 +135,23 @@ const makeDoc = async (tracks, tracksInfo, musicians) => {
           }),
           new TableCell({
             children: [new Paragraph('Nb morceaux choisis')]
-          }),
+          }) /*
           new TableCell({
             children: [new Paragraph('Morceaux choisis et joués')]
-          })
+          })*/
         ]
       }),
       ...tableRows
     ]
   })
 
-  const legend = new Paragraph({
+  /*const legend = new Paragraph({
     children: [
       new TextRun({ text: '(*) Personnes ayant sélectionné le morceau dans le logiciel' })
     ],
     style: 'legend',
     alignment: AlignmentType.RIGHT
-  })
+  })*/
 
   const space = new Paragraph({
     text: '',
@@ -211,7 +215,7 @@ const makeDoc = async (tracks, tracksInfo, musicians) => {
     sections: [
       {
         properties: {},
-        children: [title, space, ...content, space, space, legend]
+        children: [title, space, ...content, space, space /*legend*/]
       },
       {
         properties: {},

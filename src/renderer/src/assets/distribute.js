@@ -13,7 +13,7 @@ const distributeTracks = (tracks, musicians, selectedTracks) => {
   const tracksInfoByMusician = {} // To store information about tracks chosen by each musician
   musicians.forEach((musician) => {
     tracksInfoByMusician[musician.uuid] = {
-      chosen: 0,
+      //chosen: 0,
       initial: 0,
       played: 0
     }
@@ -38,13 +38,13 @@ const distributeTracks = (tracks, musicians, selectedTracks) => {
 
       if (track.assignedMusicians.length < track.trackDetails.maxMusicians) {
         track.assignedMusicians.push({
-          musician: musician,
-          chosen: true
+          musician: musician
+          //chosen: true
         })
 
-        if (selection.tracks.includes(trackUUID)) {
+        /*if (selection.tracks.includes(trackUUID)) {
           tracksInfoByMusician[musicianUUID].chosen++
-        }
+        }*/
       } else {
         // If the musician is rejected, add them to the rejectedMusicians array
         track.rejectedMusicians.push(musician)
@@ -63,7 +63,7 @@ const distributeTracks = (tracks, musicians, selectedTracks) => {
   })
 
   // Assigning remaining tracks to musicians fairly to ensure everyone participates
-  const remainingTracks = Object.values(tracksWithMusicians).filter(
+  /*const remainingTracks = Object.values(tracksWithMusicians).filter(
     (track) => track.assignedMusicians.length < track.trackDetails.maxMusicians
   )
 
@@ -93,6 +93,7 @@ const distributeTracks = (tracks, musicians, selectedTracks) => {
       tracksInfoByMusician[musicianWithLeastTracks.uuid].played++
     })
   })
+  */
 
   return { tracksWithMusicians, tracksInfoByMusician } // Returning the distribution of tracks for each musician and the information about tracks chosen by each musician
 }

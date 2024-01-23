@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import distributeTracks from '../assets/distribute'
 import sortTracks from '../assets/sort'
 
@@ -42,8 +42,12 @@ function exportAsWord() {
         {{ index + 1 }}) {{ track.trackDetails.name }} ({{ track.trackDetails.maxMusicians }}
         musiciens)
       </h1>
-      <p class="text-lg opacity-70 mb-4" v-show="track.similarityWithNext">
-        Il y a {{ track.similarityWithNext }} musiciens en commun avec le morceau suivant.
+      <p class="text-lg opacity-70 mb-4">
+        Il y a {{ track.assignedMusicians.length }} musiciens qui jouent ce morceau{{
+          track.similarityWithNext != null
+            ? ` et ${track.similarityWithNext} musiciens en commun avec le morceau suivant.`
+            : '.'
+        }}
       </p>
       <table
         class="w-full text-sm text-left bg-zinc-100 text-zinc-500 rounded-lg overflow-clip mb-4"
@@ -52,7 +56,6 @@ function exportAsWord() {
           <tr>
             <th scope="col" class="px-6 py-3">Nom</th>
             <th scope="col" class="px-6 py-3">Prénom</th>
-            <th scope="col" class="px-6 py-3">Choix</th>
           </tr>
         </thead>
         <tbody>
@@ -66,9 +69,6 @@ function exportAsWord() {
             </th>
             <th scope="row" class="px-6 py-4 font-normal text-gray-900 whitespace-nowrap">
               {{ person.musician.lastname }}
-            </th>
-            <th scope="row" class="px-6 py-4 font-normal text-gray-900 whitespace-nowrap">
-              {{ person.chosen ? 'Oui' : 'Non' }}
             </th>
           </tr>
         </tbody>
@@ -108,7 +108,6 @@ function exportAsWord() {
           <th scope="col" class="px-4 py-3">Prénom</th>
           <th scope="col" class="px-4 py-3">Nb morceaux joués</th>
           <th scope="col" class="px-4 py-3">Nb morceaux choisis</th>
-          <th scope="col" class="px-4 py-3">Morceaux choisis et joués</th>
         </tr>
       </thead>
       <tbody>
@@ -127,9 +126,6 @@ function exportAsWord() {
           </th>
           <th scope="row" class="px-4 py-4 font-normal text-center text-gray-900 whitespace-nowrap">
             {{ musician.initial }}
-          </th>
-          <th scope="row" class="px-4 py-4 font-normal text-center text-gray-900 whitespace-nowrap">
-            {{ musician.chosen }}
           </th>
         </tr>
       </tbody>
