@@ -39,7 +39,7 @@ Mélodistrib est un logiciel innovant conçu pour répartir équitablement des m
 
 Pour installer Mélodistrib, suivez ces étapes simples :
 
-1. Téléchargez le fichier d'installation depuis la section `Releases` du dépot GitHub ou en [cliquant ici](https://github.com/Zoliex/melodistrib/releases/download/v1.0.1/melodistrib-1.0.1-setup.exe).
+1. Téléchargez le fichier d'installation depuis la section `Releases` du dépot GitHub ou en [cliquant ici](https://github.com/Zoliex/melodistrib/releases/download/v1.2.1/melodistrib-1.2.1-setup.exe).
 2. Exécutez le fichier .exe téléchargé.
 3. Le logiciel s'installera automatiquement, créera une icône sur le bureau et s'ouvrira automatiquement.
 
