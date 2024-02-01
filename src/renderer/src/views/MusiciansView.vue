@@ -23,11 +23,12 @@ const musician = ref({
   lastname: ''
 })
 
-function removeMusician(id) {
-  musicians.value = musicians.value.filter((musician) => musician.id !== id)
+function removeMusician(uuid) {
+  musicians.value = musicians.value.filter((musician) => musician.uuid !== uuid)
 
-  setId()
-  check()
+  selectedTracks.value = selectedTracks.value.filter(
+    (selectedTrack) => selectedTrack.musician !== uuid
+  )
 }
 
 function addMusician() {
@@ -45,15 +46,6 @@ function addMusician() {
   } else {
     alert('Ce musicien existe déjà')
   }
-
-  setId()
-  check()
-}
-
-function setId() {
-  for (let i = 0; i < musicians.value.length; i++) {
-    musicians.value[i].id = i
-  }
 }
 
 async function importMusicians() {
@@ -61,7 +53,6 @@ async function importMusicians() {
   if (musiciansFile) {
     musicians.value = JSON.parse(musiciansFile)
   }
-  check()
 }
 
 async function exportMusicians() {
@@ -73,14 +64,6 @@ function getUuid(firstname, lastname) {
   const MY_NAMESPACE = '3d62b37a-a824-58f8-9600-41e7d8e1cf84'
   return uuidv5(firstname + lastname, MY_NAMESPACE)
 }
-
-var checkMusicians = ref(false)
-function check() {
-  var tracksWithMaxMusicians = Math.max(...tracks.value.map((t) => t.maxMusicians))
-  checkMusicians.value = musicians.value.length < tracksWithMaxMusicians ? false : true
-}
-
-check()
 </script>
 
 <template>
@@ -112,21 +95,19 @@ check()
     </div>
 
     <h1 class="text-2xl font-semibold mt-3 mb-2">Liste des musiciens</h1>
-    <p v-if="!checkMusicians" class="text-red-500 text-lg mb-2">
-      Attention : Il y a moins de musiciens que le nombre de musiciens requis pour un des morceaux
-      que vous avez ajouté.
+    <p class="text-lg opacity-70 mb-3" v-if="musicians.length != 0">
+      Il y a {{ Object.values(musicians).length }} musiciens
     </p>
     <p v-if="musicians.length == 0" class="opacity-60 text-lg">Aucun musicien</p>
     <div class="grid grid-cols-2 gap-y-0 gap-4">
       <div
         v-for="musician in musicians.slice().reverse()"
-        :key="musician.id"
         class="p-4 pr-14 my-2 bg-gray-200 rounded-lg w-full relative"
       >
-        <h1 class="font-semibold text-lg">{{ musician.firstname }}</h1>
-        <p>{{ musician.lastname }}</p>
+        <h1 class="font-semibold text-lg break-words">{{ musician.firstname }}</h1>
+        <p class="break-words">{{ musician.lastname }}</p>
         <button
-          @click="removeMusician(musician.id)"
+          @click="removeMusician(musician.uuid)"
           class="absolute top-3 right-3 outline-none bg-red-500 text-white py-2 px-3 rounded-md"
           title="Supprimer"
         >
@@ -160,7 +141,7 @@ check()
       <button
         class="button bg-gradient-to-br from-blue-500 to-violet-700 hover:bg-blue-700 group"
         @click="router.push('/select')"
-        :disabled="musicians.length == 0 || !checkMusicians"
+        :disabled="musicians.length == 0"
       >
         Suivant
         <i class="gg-arrow-right ml-2 group-hover:ml-4 transition-all duration-150"></i>

@@ -45,8 +45,8 @@ function exportAsWord() {
       <p class="text-lg opacity-70 mb-4">
         Il y a {{ track.assignedMusicians.length }} musiciens qui jouent ce morceau{{
           track.similarityWithNext != null
-            ? ` et ${track.similarityWithNext} musiciens en commun avec le morceau suivant.`
-            : '.'
+            ? ` et ${track.similarityWithNext} musiciens en commun avec le morceau suivant`
+            : ''
         }}
       </p>
       <table
@@ -90,7 +90,7 @@ function exportAsWord() {
         n'{{ track.rejectedMusicians.length > 1 ? 'ont ' : 'a ' }} pas été{{
           track.rejectedMusicians.length > 1 ? 's' : ''
         }}
-        choisi{{ track.rejectedMusicians.length > 1 ? 's' : '(e)' }} pour jouer ce morceau.
+        choisi{{ track.rejectedMusicians.length > 1 ? 's' : '(e)' }} pour jouer ce morceau
       </p>
     </div>
 
@@ -98,7 +98,7 @@ function exportAsWord() {
 
     <h1 class="text-3xl font-semibold mb-1">Informations sur les musiciens</h1>
     <p class="text-lg opacity-70 mb-4">
-      Il y a {{ Object.values(tracksInfoByMusician).length }} musiciens qui jouent ces morceaux.
+      Il y a {{ Object.values(tracksInfoByMusician).length }} musiciens qui jouent ces morceaux
     </p>
 
     <table class="w-full text-sm text-left bg-zinc-100 text-zinc-500 rounded-lg overflow-clip mb-4">

@@ -18,10 +18,8 @@ const track = ref({
   maxMusicians: 12
 })
 
-function removeTrack(id) {
-  tracks.value = tracks.value.filter((track) => track.id !== id)
-
-  setId()
+function removeTrack(uuid) {
+  tracks.value = tracks.value.filter((track) => track.uuid !== uuid)
 }
 
 function addTrack() {
@@ -34,14 +32,6 @@ function addTrack() {
     track.value = { name: '', maxMusicians: 12 }
   } else {
     alert('Ce morceau existe déjà')
-  }
-
-  setId()
-}
-
-function setId() {
-  for (let i = 0; i < tracks.value.length; i++) {
-    tracks.value[i].id = i
   }
 }
 
@@ -103,6 +93,9 @@ function getUuid(name, maxMusicians) {
     </div>
 
     <h1 class="text-2xl font-semibold mt-3 mb-2">Liste des morceaux</h1>
+    <p class="text-lg opacity-70 mb-3" v-if="tracks.length != 0">
+      Il y a {{ Object.values(tracks).length }} morceaux
+    </p>
     <p v-if="tracks.length == 0" class="opacity-60 text-lg">Aucun morceau</p>
     <div class="grid grid-cols-2 gap-y-0 gap-4">
       <div
@@ -110,10 +103,10 @@ function getUuid(name, maxMusicians) {
         :key="track.id"
         class="p-4 pr-14 my-2 bg-gray-200 rounded-lg w-full relative"
       >
-        <h1 class="font-semibold text-lg text-wrap">{{ track.name }}</h1>
+        <h1 class="font-semibold text-lg text-wrap break-words">{{ track.name }}</h1>
         <p>{{ track.maxMusicians }} musiciens</p>
         <button
-          @click="removeTrack(track.id)"
+          @click="removeTrack(track.uuid)"
           class="absolute top-3 right-3 outline-none bg-red-500 text-white py-2 px-3 rounded-md"
           title="Supprimer"
         >
