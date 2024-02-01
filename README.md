@@ -39,7 +39,7 @@ Mélodistrib est un logiciel innovant conçu pour répartir équitablement des m
 
 Pour installer Mélodistrib, suivez ces étapes simples :
 
-1. Téléchargez le fichier d'installation depuis la section `Releases` du dépot GitHub ou en [cliquant ici](https://github.com/Zoliex/melodistrib/releases/download/v1.0.1/melodistrib-1.0.1-setup.exe).
+1. Téléchargez le fichier d'installation depuis la section `Releases` du dépot GitHub ou en [cliquant ici](https://github.com/Zoliex/melodistrib/releases/download/v1.2.1/melodistrib-1.2.1-setup.exe).
 2. Exécutez le fichier .exe téléchargé.
 3. Le logiciel s'installera automatiquement, créera une icône sur le bureau et s'ouvrira automatiquement.
 
@@ -47,7 +47,7 @@ Pour installer Mélodistrib, suivez ces étapes simples :
 
 ### 1. Choix des morceaux
 
-Sur la première page, `Choix des morceaux`, saisissez la liste des morceaux qui seront joués. Pour chaque morceau, spécifiez son nom et le nombre de musiciens requis. Utilisez les boutons `Exporter` et `Importer` pour sauvegarder ou charger la liste depuis dans un fichier au format .melt.
+Sur la première page, `Choix des morceaux`, saisissez la liste des morceaux qui seront joués. Pour chaque morceau, spécifiez son nom et le nombre maximum de musiciens requis pour celui-ci, le logiciel n'attribuera pas le morceau à un musicien s'il ne l'a pas choisi, au contraire si trop de personnes ont sélectionné le morceau, il indiquera quelles personnes n'ont pas été attribuées au morceau. Utilisez les boutons `Exporter` et `Importer` pour sauvegarder ou charger la liste depuis dans un fichier au format .melt.
 
 ![Choix des morceaux](images/choix_morceaux.png)
 
