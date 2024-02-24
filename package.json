@@ -1,6 +1,6 @@
 {
   "name": "melodistrib",
-  "version": "1.2.2",
+  "version": "2.0.0",
   "description": "Logiciel de répartition équitable de morceaux",
   "main": "./out/main/index.js",
   "author": "Enzo Coquelle",

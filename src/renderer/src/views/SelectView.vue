@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 var router = useRouter()
 
@@ -14,11 +14,10 @@ var selectedTracks = window.selectedTracks
 
 var search = ref('')
 
-function getTracks(musician) {
-  return selectedTracks.value
-    .filter((track) => track.musician == musician.uuid)
-    .map((track) => track.tracks)
-    .flat()
+function getTracks(uuid) {
+  return [
+    ...(selectedTracks.value.filter((selection) => selection[0] == uuid)[0] || [uuid])
+  ].splice(1)
 }
 
 var showSelect = ref(false)
@@ -32,15 +31,15 @@ if (musicians.value.length == 0) {
 function selectTracks(musician) {
   showSelect.value = true
   tempMusician.value = musician
-  tempSelect.value = getTracks(musician)
+  tempSelect.value = getTracks(musician[0])
 }
 
 function closeSelect() {
   showSelect.value = false
   selectedTracks.value = selectedTracks.value.filter(
-    (track) => track.musician != tempMusician.value.uuid
+    (selection) => selection[0] != tempMusician.value[0]
   )
-  selectedTracks.value.push({ musician: tempMusician.value.uuid, tracks: tempSelect.value })
+  selectedTracks.value.push([tempMusician.value[0], ...tempSelect.value])
 }
 
 function select(e) {
@@ -52,7 +51,7 @@ function select(e) {
 function getTrackName(track) {
   var trackName
   try {
-    trackName = tracks.value.find((t) => t.uuid == track).name
+    trackName = tracks.value.find((t) => t[0] == track)[1]
   } catch (error) {
     trackName = ''
   }
@@ -67,6 +66,8 @@ async function importSelections() {
     tracks.value = selection.tracks
     selectedTracks.value = selection.selectedTracks
   }
+
+  sortAll()
 }
 
 async function exportSelections() {
@@ -75,15 +76,28 @@ async function exportSelections() {
     tracks: tracks.value,
     selectedTracks: selectedTracks.value
   }
-  const selectionsFile = JSON.stringify(selections, false, 2)
+  const selectionsFile = JSON.stringify(selections)
   window.api.saveSelectionsFile(selectionsFile)
+}
+
+function sortTracks() {
+  tracks.value.sort((a, b) => a[1].localeCompare(b[1]))
+}
+
+function sortMusicians() {
+  musicians.value.sort((a, b) => a[2].localeCompare(b[2]))
+}
+
+function sortAll() {
+  sortTracks()
+  sortMusicians()
 }
 </script>
 
 <template>
   <main class="pb-16">
     <p class="text-xl mb-3 text-center">Cliquez sur un musicien pour sélectionner ses morceaux</p>
-    <input type="text" v-model="search" placeholder="Rechercher" class="input mb-4 !bg-zinc-200" />
+    <input v-model="search" type="text" placeholder="Rechercher" class="input mb-4 !bg-zinc-200" />
     <table class="w-full text-sm text-left bg-zinc-100 text-zinc-500 rounded-lg overflow-clip">
       <thead class="text-zinc-700 uppercase bg-zinc-300">
         <tr>
@@ -94,53 +108,62 @@ async function exportSelections() {
       </thead>
       <tbody>
         <tr
+          v-for="musician in musicians.filter(
+            (musician) =>
+              musician[1].toLowerCase().includes(search.toLowerCase()) ||
+              musician[2].toLowerCase().includes(search.toLowerCase())
+          )"
+          :key="musician[0]"
           title="Cliquez pour selectionner les morceaux"
           class="border-b text-base last:border-b-0 hover:bg-zinc-200 transition-all duration-150 cursor-pointer"
-          v-for="musician in musicians.filter(
-            (musician) => musician.firstname.includes(search) || musician.lastname.includes(search)
-          )"
-          :key="musician.id"
         >
           <th
             scope="row"
-            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
+            class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap"
             @click="selectTracks(musician)"
           >
-            {{ musician.firstname }}
+            {{ musician[1] }}
           </th>
-          <td class="px-6 py-4" @click="selectTracks(musician)">
-            {{ musician.lastname }}
+          <td class="px-6 py-3" @click="selectTracks(musician)">
+            {{ musician[2] }}
           </td>
-          <td class="px-6 py-4" @click="selectTracks(musician)">
-            <p v-for="track in getTracks(musician)" :key="track.id">
-              {{ getTrackName(track) }}
-            </p>
-            {{ getTracks(musician).length == 0 ? 'Aucune musique sélectionnée' : '' }}
+          <td class="px-6 py-3" @click="selectTracks(musician)">
+            <ul class="list-disc">
+              <li v-for="track in getTracks(musician[0])" :key="track[0]">
+                {{ getTrackName(track) }}
+              </li>
+            </ul>
+            {{ getTracks(musician[0]).length == 0 ? 'Aucune musique sélectionnée' : '' }}
           </td>
         </tr>
       </tbody>
     </table>
 
     <div
-      class="bg-zinc-950 fixed z-50 w-full h-full top-0 left-0 bg-opacity-60 flex items-center justify-center"
       v-show="showSelect"
+      class="bg-zinc-950 fixed z-50 w-full h-full top-0 left-0 bg-opacity-60 flex items-center justify-center"
     >
       <div class="bg-white w-4/5 h-min max-h-4/5 rounded-lg p-4 relative">
         <h1 class="text-2xl font-semibold text-center mb-4">
-          Selectionner les morceaux de {{ tempMusician.firstname }} {{ tempMusician.lastname }}
+          Selectionner les morceaux de {{ tempMusician[1] }} {{ tempMusician[2] }}
         </h1>
         <div class="w-full h-72 relative">
           <div class="absolute top-0 right-0 bottom-0 left-0 overflow-auto">
-            <div v-for="track in tracks" :key="track.id" class="flex items-center">
-              <input
-                type="checkbox"
-                :value="track.uuid"
-                :checked="tempSelect.includes(track.uuid)"
-                @change="select($event)"
-                :id="track.uuid"
-                class="w-5 h-5 cursor-pointer"
-              />
-              <label :for="track.uuid" class="ml-2 text-lg cursor-pointer">{{ track.name }}</label>
+            <div v-for="track in tracks" :key="track[0]" class="flex items-center my-1">
+              <div class="w-5 h-full flex">
+                <input
+                  :id="track[0]"
+                  type="checkbox"
+                  :value="track[0]"
+                  :checked="tempSelect.includes(track[0])"
+                  class="!w-5 !h-5 cursor-pointer"
+                  @change="select($event)"
+                />
+              </div>
+
+              <label :for="track[0]" class="ml-2 text-lg cursor-pointer">
+                {{ track[1] }} ({{ track[2] }} musicien{{ track[2] > 1 ? 's' : '' }})
+              </label>
             </div>
           </div>
         </div>

@@ -42,11 +42,11 @@ publish:
   url: https://example.com/auto-updates
 fileAssociations:
   - name: Liste de morceaux melodistrib
-    ext: 'melt'
-    description: 'Liste de morceaux melodistrib'
+    ext: 'melt2'
+    description: 'Liste de morceaux melodistrib v2'
   - name: Liste de musiciens melodistrib
-    ext: 'melm'
-    description: 'Liste de musiciens melodistrib'
+    ext: 'melm2'
+    description: 'Liste de musiciens melodistrib v2'
   - name: Liste de sélections de morceaux melodistrib
-    ext: 'mels'
-    description: 'Liste de sélections de morceaux melodistrib'
+    ext: 'mels2'
+    description: 'Liste de sélections de morceaux melodistrib v2'

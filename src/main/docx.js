@@ -11,7 +11,11 @@ import {
 } from 'docx'
 import moment from 'moment'
 
-const makeDoc = async (tracks, tracksInfo, musicians) => {
+function rejectedMusicians(track) {
+  return track.selected.filter((m) => !track.assigned.includes(m))
+}
+
+const makeDoc = async (tracks, stats, musicians) => {
   var content = []
   var tableRows = []
 
@@ -20,8 +24,8 @@ const makeDoc = async (tracks, tracksInfo, musicians) => {
       new Paragraph({
         children: [
           new TextRun(`${index + 1}) `),
-          new TextRun({ text: `« ${track.trackDetails.name} »`, bold: true }),
-          new TextRun(` (${track.trackDetails.maxMusicians} Musiciens)`)
+          new TextRun({ text: `« ${track.name} »`, bold: true }),
+          new TextRun(` (${track.max} Musiciens)`)
         ],
         style: 'track'
       })
@@ -32,7 +36,7 @@ const makeDoc = async (tracks, tracksInfo, musicians) => {
         new Paragraph({
           children: [
             new TextRun({
-              text: `Il y a ${track.assignedMusicians.length} musiciens qui jouent ce morceau${
+              text: `Il y a ${track.assigned.length} musiciens qui jouent ce morceau${
                 track.similarityWithNext != null
                   ? `et ${track.similarityWithNext} musiciens en commun avec le morceau suivant.`
                   : '.'
@@ -55,8 +59,13 @@ const makeDoc = async (tracks, tracksInfo, musicians) => {
       new Paragraph({
         children: [
           new TextRun({
-            text: `Musiciens : ${track.assignedMusicians
-              .map((m) => `${m.musician.firstname} ${m.musician.lastname}`)
+            text: `Musiciens : ${track.assigned
+              .map(
+                (m) =>
+                  `${musicians.find((musician) => musician[0] === m)[1]} ${
+                    musicians.find((musician) => musician[0] === m)[2]
+                  }`
+              )
               .join(', ')}`
           }),
           new TextRun({ break: 1 })
@@ -64,13 +73,18 @@ const makeDoc = async (tracks, tracksInfo, musicians) => {
       })
     )
 
-    if (track.rejectedMusicians.length > 0) {
+    if (rejectedMusicians(track).length > 0) {
       content.push(
         new Paragraph({
           children: [
             new TextRun({
-              text: `Musiciens rejetés : ${track.rejectedMusicians
-                .map((m) => `${m.firstname} ${m.lastname}`)
+              text: `Musiciens rejetés : ${rejectedMusicians(track)
+                .map(
+                  (m) =>
+                    `${musicians.find((musician) => musician[0] === m)[1]} ${
+                      musicians.find((musician) => musician[0] === m)[2]
+                    }`
+                )
                 .join(', ')}`
             }),
             new TextRun({ break: 1 })
@@ -80,25 +94,22 @@ const makeDoc = async (tracks, tracksInfo, musicians) => {
     }
   })
 
-  Object.entries(tracksInfo).forEach((trackInfo) => {
+  stats.forEach((stat) => {
     tableRows.push(
       new TableRow({
         children: [
           new TableCell({
-            children: [new Paragraph(musicians.find((m) => m.uuid === trackInfo[0]).firstname)]
+            children: [new Paragraph(musicians.find((m) => m[0] === stat[0])[1])]
           }),
           new TableCell({
-            children: [new Paragraph(musicians.find((m) => m.uuid === trackInfo[0]).lastname)]
+            children: [new Paragraph(musicians.find((m) => m[0] === stat[0])[2])]
           }),
           new TableCell({
-            children: [new Paragraph(String(trackInfo[1].played))]
+            children: [new Paragraph(String(stat[2]))]
           }),
           new TableCell({
-            children: [new Paragraph(String(trackInfo[1].initial))]
+            children: [new Paragraph(String(stat[1]))]
           })
-          /*new TableCell({
-            children: [new Paragraph(String(trackInfo[1].chosen))]
-          })*/
         ]
       })
     )
@@ -135,23 +146,12 @@ const makeDoc = async (tracks, tracksInfo, musicians) => {
           }),
           new TableCell({
             children: [new Paragraph('Nb morceaux choisis')]
-          }) /*
-          new TableCell({
-            children: [new Paragraph('Morceaux choisis et joués')]
-          })*/
+          })
         ]
       }),
       ...tableRows
     ]
   })
-
-  /*const legend = new Paragraph({
-    children: [
-      new TextRun({ text: '(*) Personnes ayant sélectionné le morceau dans le logiciel' })
-    ],
-    style: 'legend',
-    alignment: AlignmentType.RIGHT
-  })*/
 
   const space = new Paragraph({
     text: '',

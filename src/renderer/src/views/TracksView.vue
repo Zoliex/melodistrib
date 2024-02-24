@@ -13,26 +13,30 @@ var tracks = window.tracks
 var musicians = window.musicians
 var selectedTracks = window.selectedTracks
 
-const track = ref({
+const trackStructure = ref({
   name: '',
   maxMusicians: 12
 })
 
 function removeTrack(uuid) {
-  tracks.value = tracks.value.filter((track) => track.uuid !== uuid)
+  tracks.value = tracks.value.filter((track) => track[0] !== uuid)
+
+  sortTracks()
 }
 
 function addTrack() {
-  if (!tracks.value.find((t) => t.name == track.value.name)) {
-    tracks.value.push({
-      name: track.value.name,
-      maxMusicians: track.value.maxMusicians,
-      uuid: getUuid(track.value.name, track.value.maxMusicians)
-    })
-    track.value = { name: '', maxMusicians: 12 }
+  if (!tracks.value.find((t) => t.name == trackStructure.value.name)) {
+    tracks.value.push([
+      getUuid(trackStructure.value.name, trackStructure.value.maxMusicians),
+      trackStructure.value.name,
+      trackStructure.value.maxMusicians
+    ])
+    trackStructure.value = { name: '', maxMusicians: 12 }
   } else {
     alert('Ce morceau existe déjà')
   }
+
+  sortTracks()
 }
 
 async function importTracks() {
@@ -40,10 +44,12 @@ async function importTracks() {
   if (tracksFile) {
     tracks.value = JSON.parse(tracksFile)
   }
+
+  sortTracks()
 }
 
 async function exportTracks() {
-  const tracksFile = JSON.stringify(tracks.value, false, 2)
+  const tracksFile = JSON.stringify(tracks.value)
   window.api.saveTracksFile(tracksFile)
 }
 
@@ -56,11 +62,26 @@ async function importSelections() {
     selectedTracks.value = selection.selectedTracks
     router.push('/select')
   }
+
+  sortAll()
 }
 
 function getUuid(name, maxMusicians) {
   const MY_NAMESPACE = '3d62b37a-a824-58f8-9600-41e7d8e1cf84'
   return uuidv5(name + maxMusicians, MY_NAMESPACE)
+}
+
+function sortTracks() {
+  tracks.value.sort((a, b) => a[1].localeCompare(b[1]))
+}
+
+function sortMusicians() {
+  musicians.value.sort((a, b) => a[2].localeCompare(b[2]))
+}
+
+function sortAll() {
+  sortTracks()
+  sortMusicians()
 }
 </script>
 
@@ -70,45 +91,45 @@ function getUuid(name, maxMusicians) {
       <p class="text-xl font-semibold mb-2 text-center">Ajouter un morceau</p>
       <p class="mb-2 text-lg">Nom du morceau</p>
       <input
+        v-model="trackStructure.name"
         type="text"
-        v-model="track.name"
         placeholder="Entrez le nom du morceau"
         class="input mb-3"
       />
       <p class="mb-2 text-lg">Nombre de musiciens jouant ce morceau</p>
       <input
+        v-model="trackStructure.maxMusicians"
         type="number"
-        v-model="track.maxMusicians"
         min="1"
         placeholder="Nombre de musiciens"
         class="input"
       />
       <button
-        @click="addTrack()"
-        :disabled="track.name == '' || track.maxMusicians == ''"
         class="outline-none py-1 h-9 text-lg rounded-lg w-full bg-green-500 text-white mt-4 hover:opacity-80 transition-all duration-150 disabled:opacity-60"
+        :disabled="trackStructure.name == '' || trackStructure.maxMusicians == ''"
+        @click="addTrack()"
       >
         Ajouter
       </button>
     </div>
 
     <h1 class="text-2xl font-semibold mt-3 mb-2">Liste des morceaux</h1>
-    <p class="text-lg opacity-70 mb-3" v-if="tracks.length != 0">
-      Il y a {{ Object.values(tracks).length }} morceaux
+    <p v-if="tracks.length != 0" class="text-lg opacity-70 mb-3">
+      Il y a {{ tracks.length }} morceau{{ tracks.length > 1 ? 'x' : '' }}
     </p>
     <p v-if="tracks.length == 0" class="opacity-60 text-lg">Aucun morceau</p>
     <div class="grid grid-cols-2 gap-y-0 gap-4">
       <div
-        v-for="track in tracks.slice().reverse()"
-        :key="track.id"
+        v-for="track in tracks"
+        :key="track[0]"
         class="p-4 pr-14 my-2 bg-gray-200 rounded-lg w-full relative"
       >
-        <h1 class="font-semibold text-lg text-wrap break-words">{{ track.name }}</h1>
-        <p>{{ track.maxMusicians }} musiciens</p>
+        <h1 class="font-semibold text-lg text-wrap break-words">{{ track[1] }}</h1>
+        <p>{{ track[2] }} musiciens</p>
         <button
-          @click="removeTrack(track.uuid)"
           class="absolute top-3 right-3 outline-none bg-red-500 text-white py-2 px-3 rounded-md"
           title="Supprimer"
+          @click="removeTrack(track[0])"
         >
           <i class="gg-trash"></i>
         </button>
@@ -131,15 +152,15 @@ function getUuid(name, maxMusicians) {
       </button>
       <button
         class="button bg-gradient-to-br from-blue-500 to-violet-700 hover:bg-blue-700"
-        @click="exportTracks()"
         :disabled="tracks.length == 0"
+        @click="exportTracks()"
       >
         Exporter
       </button>
       <button
         class="button bg-gradient-to-br from-blue-500 to-violet-700 hover:bg-blue-700 group"
-        @click="router.push('/musicians')"
         :disabled="tracks.length == 0"
+        @click="router.push('/musicians')"
       >
         Suivant
         <i class="gg-arrow-right ml-2 group-hover:ml-4 transition-all duration-150"></i>

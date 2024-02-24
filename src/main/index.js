@@ -63,7 +63,7 @@ app.whenReady().then(() => {
     const paths = dialog.showOpenDialogSync({
       title: 'Ouvrir un fichier de morceaux',
       properties: ['openFile'],
-      filters: [{ name: 'Fichier morceaux', extensions: ['melt'] }]
+      filters: [{ name: 'Fichier morceaux', extensions: ['melt2'] }]
     })
     if (!paths) {
       return null
@@ -76,7 +76,7 @@ app.whenReady().then(() => {
     const paths = dialog.showOpenDialogSync({
       title: 'Ouvrir un fichier de musiciens',
       properties: ['openFile'],
-      filters: [{ name: 'Fichier musiciens', extensions: ['melm'] }]
+      filters: [{ name: 'Fichier musiciens', extensions: ['melm2'] }]
     })
     if (!paths) {
       return null
@@ -89,7 +89,7 @@ app.whenReady().then(() => {
     const paths = dialog.showOpenDialogSync({
       title: 'Ouvrir un fichier de selections de morceaux',
       properties: ['openFile'],
-      filters: [{ name: 'Fichier sélections', extensions: ['mels'] }]
+      filters: [{ name: 'Fichier sélections', extensions: ['mels2'] }]
     })
     if (!paths) {
       return null
@@ -102,7 +102,7 @@ app.whenReady().then(() => {
     const path = dialog.showOpenDialogSync({
       title: 'Enregistrer un fichier de morceaux',
       properties: ['openFile', 'promptToCreate'],
-      filters: [{ name: 'Fichier morceaux', extensions: ['melt'] }],
+      filters: [{ name: 'Fichier morceaux', extensions: ['melt2'] }],
       buttonLabel: 'Enregistrer'
     })
     if (!path) return
@@ -129,7 +129,7 @@ app.whenReady().then(() => {
     const path = dialog.showOpenDialogSync({
       title: 'Enregistrer un fichier de musiciens',
       properties: ['openFile', 'promptToCreate'],
-      filters: [{ name: 'Fichier musiciens', extensions: ['melm'] }],
+      filters: [{ name: 'Fichier musiciens', extensions: ['melm2'] }],
       buttonLabel: 'Enregistrer'
     })
     if (!path) return
@@ -156,7 +156,7 @@ app.whenReady().then(() => {
     const path = dialog.showOpenDialogSync({
       title: 'Enregistrer un fichier de sélection de morceaux',
       properties: ['openFile', 'promptToCreate'],
-      filters: [{ name: 'Fichier selections', extensions: ['mels'] }],
+      filters: [{ name: 'Fichier selections', extensions: ['mels2'] }],
       buttonLabel: 'Enregistrer'
     })
     if (!path) return
