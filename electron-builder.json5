@@ -1,0 +1,69 @@
+{
+  "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
+  "appId": "fr.melodistrib.app",
+  "icon": "resources/png/icon.png",
+  "asar": true,
+  "productName": "Melodistrib v3",
+  "directories": {
+    "output": "release/${version}"
+  },
+  "files": [
+    "dist",
+    "dist-electron"
+  ],
+  "mac": {
+    "target": [
+      "dmg"
+    ],
+    "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
+  },
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true,
+    "deleteAppDataOnUninstall": false
+  },
+  "linux": {
+    "target": [
+      "AppImage"
+    ],
+    "artifactName": "${productName}-Linux-${version}.${ext}"
+  },
+  "fileAssociations": [
+    {
+      "name": "Liste de morceaux melodistrib",
+      "ext": "melt2",
+      "description": "Liste de morceaux melodistrib v2",
+      "icon": "resources/png/melt-ext.png"
+    },
+    {
+      "name": "Liste de musiciens melodistrib",
+      "ext": "melm2",
+      "description": "Liste de musiciens melodistrib v2",
+      "icon": "resources/png/melm-ext.png"
+    },
+    {
+      "name": "Liste de sélections de morceaux melodistrib",
+      "ext": "mels2",
+      "description": "Liste de sélections de morceaux melodistrib v2",
+      "icon": "resources/png/mels-ext.png"
+    },
+    {
+      "name": "Fichier de distribution melodistrib",
+      "ext": "meld2",
+      "description": "Fichier de distribution melodistrib v2",
+      "icon": "resources/png/meld-ext.png"
+    }
+  ]
+}
